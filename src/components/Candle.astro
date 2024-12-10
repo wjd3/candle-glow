@@ -38,7 +38,6 @@ import { Image } from 'astro:assets'
 	.illumination {
 		@apply absolute inset-0;
 	}
-
 	.illumination:before {
 		@apply opacity-0 scale-0 content-[''] absolute top-0 left-1/2 -translate-x-1/2 rounded-full w-0 h-0 will-change-[opacity,transform];
 		box-shadow:
@@ -48,15 +47,16 @@ import { Image } from 'astro:assets'
 			0 0 100px 40px rgba(255, 244, 230, 0.16);
 		animation: glow-entrance 1.5s ease 2s forwards;
 	}
-	@supports (-webkit-backdrop-filter: none) {
-		.illumination:before {
-			box-shadow:
-				0 0 500px 100px rgba(255, 166, 0, 0.4),
-				0 0 300px 100px rgba(255, 244, 230, 0.5),
-				0 0 200px 80px rgba(255, 166, 0, 0.3),
-				0 0 100px 40px rgba(255, 244, 230, 0.4);
-		}
+	_::-webkit-full-page-media,
+	_:future,
+	:root .illumination:before {
+		box-shadow:
+			0 0 500px 100px rgba(255, 166, 0, 0.4),
+			0 0 300px 100px rgba(255, 244, 230, 0.5),
+			0 0 200px 80px rgba(255, 166, 0, 0.3),
+			0 0 100px 40px rgba(255, 244, 230, 0.4);
 	}
+
 	@keyframes glow-entrance {
 		to {
 			@apply opacity-100 scale-125;
