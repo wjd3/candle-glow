@@ -1,0 +1,65 @@
+---
+import CandleUnlit from '../assets/candle-unlit.png'
+import CandleLit from '../assets/candle-lit.png'
+import { Image } from 'astro:assets'
+---
+
+<div class='candle'>
+	<!-- Candle (Unlit) -->
+	<Image alt='Candle (Unlit)' class='unlit' src={CandleUnlit} />
+	<!-- Glow -->
+	<div class='illumination'>
+		<!-- Candle (Lit) -->
+		<Image alt='Candle (Lit)' class='lit' src={CandleLit} />
+	</div>
+</div>
+
+<style>
+	.candle {
+		@apply w-60 sm:w-80 relative translate-y-full opacity-0 will-change-[opacity,transform];
+		animation: entrance 1s ease 0.5s forwards;
+	}
+	@keyframes entrance {
+		to {
+			@apply translate-y-0 opacity-100;
+		}
+	}
+
+	.lit {
+		@apply opacity-0 will-change-[opacity];
+		animation: lit-entrance 1s ease 1.5s forwards;
+	}
+	@keyframes lit-entrance {
+		to {
+			@apply opacity-100;
+		}
+	}
+
+	.illumination {
+		@apply absolute inset-0;
+	}
+
+	.illumination:before {
+		@apply opacity-0 scale-0 content-[''] absolute top-0 left-1/2 -translate-x-1/2 rounded-full w-0 h-0 will-change-[opacity,transform];
+		box-shadow:
+			0 0 500px 100px rgba(255, 166, 0, 0.16),
+			0 0 300px 100px rgba(255, 244, 230, 0.2),
+			0 0 200px 80px rgba(255, 166, 0, 0.12),
+			0 0 100px 40px rgba(255, 244, 230, 0.16);
+		animation: glow-entrance 1.5s ease 2s forwards;
+	}
+	@supports (-webkit-backdrop-filter: none) {
+		.illumination:before {
+			box-shadow:
+				0 0 500px 100px rgba(255, 166, 0, 0.4),
+				0 0 300px 100px rgba(255, 244, 230, 0.5),
+				0 0 200px 80px rgba(255, 166, 0, 0.3),
+				0 0 100px 40px rgba(255, 244, 230, 0.4);
+		}
+	}
+	@keyframes glow-entrance {
+		to {
+			@apply opacity-100 scale-125;
+		}
+	}
+</style>
